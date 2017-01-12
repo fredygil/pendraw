@@ -1,22 +1,18 @@
-import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
-
-import './main.html';
-
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
+//Checks for changes on session variable displayMessages ans shows the message
+Meteor.autorun(function() {
+	// Whenever this session variable changes, run this function.
+	var message = Session.get('displayMessage');
+	var messageText, messageStatus;
+	if (message) {
+		if ($.isPlainObject(message)){
+			messageText = message.message;
+			messageStatus = message.status || 'danger';
+		} else {
+			messageText = message;
+			messageStatus = 'danger';
+		}
+	  	UIkit.notify(messageText, {status: messageStatus});
+	  	Session.set('displayMessage', null);
+	}
 });
 
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-});
-
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
-});
