@@ -6,10 +6,10 @@ Template.welcome.helpers({
         return Session.get("userStatus") == 'register' || false;
     },
     userStatus: function(){
-    	return Session.get("userStatus");
+        return Session.get("userStatus");
     },
     loginMode: function(mode){
-    	return Session.get("loginMode") == mode;
+        return Session.get("loginMode") == mode;
     }
 });
 
@@ -20,8 +20,8 @@ Template.login.events({
         Session.set("userStatus", "register");
     },
     'click #recover-password': function(e){
-    	e.preventDefault();
-    	Session.set("loginMode", "RECOVER");
+        e.preventDefault();
+        Session.set("loginMode", "RECOVER");
     },
     'submit form': function(e){
         e.preventDefault();
@@ -30,14 +30,14 @@ Template.login.events({
         var password = e.target.password.value;
         
         Meteor.loginWithPassword(username, password, function(err){
-			if (err){
-        		Session.set("displayMessage", err);
-			} else {
-		        Session.set("userStatus", "loggedIn");
-		        //Logged in? Start to draw
-		        Router.go("/draw");
-			}    
-			return false; 	
+            if (err){
+                Session.set("displayMessage", err);
+            } else {
+                Session.set("userStatus", "loggedIn");
+                //Logged in? Start to draw
+                Router.go("/draw");
+            }    
+            return false;   
         });
     }    
 });
@@ -57,22 +57,22 @@ Template.register.events({
         var password2 = e.target.password2.value;
 
         if (password != password2){
-        	//Passwords match validation. Uses UIKit
-        	Session.set("displayMessage", "Passwords Don't Match")
+            //Passwords match validation. Uses UIKit
+            Session.set("displayMessage", "Passwords Don't Match")
         } else {
-        	//Go ahead an create new user
-	        Accounts.createUser({
-	            email: username,
-	            password: password
-	        }, function(err){
-				if (err){
-        			Session.set("displayMessage", err);
-				} else {
-			        Session.set("userStatus", "loggedIn");
-			        Router.go("/draw");
-				}    
-				return false; 	
-	        });
+            //Go ahead an create new user
+            Accounts.createUser({
+                email: username,
+                password: password
+            }, function(err){
+                if (err){
+                    Session.set("displayMessage", err);
+                } else {
+                    Session.set("userStatus", "loggedIn");
+                    Router.go("/draw");
+                }    
+                return false;   
+            });
 
         }
 
@@ -82,50 +82,50 @@ Template.register.events({
 
 //Password recovery helpers
 Template.recover.helpers({
-	resetPassword: function(t) {
-	  	return Session.get('resetPassword');
-	}
+    resetPassword: function(t) {
+        return Session.get('resetPassword');
+    }
 });
 
 
 //Password recovery events
 Template.recover.events({
-	'click #login-screen': function(e){
-		e.preventDefault();
-		Session.set("loginMode", "LOGIN");
-	},
-	'submit #recovery-form' : function(e) {
+    'click #login-screen': function(e){
+        e.preventDefault();
+        Session.set("loginMode", "LOGIN");
+    },
+    'submit #recovery-form' : function(e) {
         e.preventDefault()
         var email = $.trim(e.target.username.value);
 
-		Session.set('loading', true);
+        Session.set('loading', true);
         Accounts.forgotPassword({email: email}, function(err){
-        	if (err) {
-            	Session.set('displayMessage', err);
-        	}
-          	else {
-            	Session.set('displayMessage', {message: 'Email Sent. Please check your email.', status: 'success'});
-          	}
-          	Session.set('loading', false);
+            if (err) {
+                Session.set('displayMessage', err);
+            }
+            else {
+                Session.set('displayMessage', {message: 'Email Sent. Please check your email.', status: 'success'});
+            }
+            Session.set('loading', false);
         });
         return false; 
     },
-	'submit #new-password' : function(e, t) {
-    	e.preventDefault();
+    'submit #new-password' : function(e, t) {
+        e.preventDefault();
         
         var password = e.target.password.value;
-      	Session.set('loading', true);
-      	Accounts.resetPassword(Session.get('resetPassword'), password, function(err){
-        	if (err)
-          		Session.set('displayMessage', err);
-        	else {
-            	Session.set('displayMessage', {message: 'Password succesfully changed', status: 'success'});
-          		Session.set('resetPassword', null);
-				Session.set("loginMode", "LOGIN");
-				Router.go("/");
-        	}
-        	Session.set('loading', false);
-      	});
-      	return false;
+        Session.set('loading', true);
+        Accounts.resetPassword(Session.get('resetPassword'), password, function(err){
+            if (err)
+                Session.set('displayMessage', err);
+            else {
+                Session.set('displayMessage', {message: 'Password succesfully changed', status: 'success'});
+                Session.set('resetPassword', null);
+                Session.set("loginMode", "LOGIN");
+                Router.go("/");
+            }
+            Session.set('loading', false);
+        });
+        return false;
     }
 });

@@ -4,8 +4,8 @@ Router.configure({
 
 //Welcome screen
 Router.route('/', function () {
-	//By default, loginMode is LOGIN, i.e., User must sign in or sign up
-	Session.set("loginMode", "LOGIN");
+    //By default, loginMode is LOGIN, i.e., User must sign in or sign up
+    Session.set("loginMode", "LOGIN");
 
     if (Meteor.userId()) {
         Session.set("userStatus", "loggedIn");
@@ -20,12 +20,12 @@ Router.route('/', function () {
 
 
 Router.route('/reset-password/:token', function () {
-	//Used for password recovery. If URL has a recovery token, it is 
-	//stored in resetPasswordToken
-	if (this.params.token) {
-		Session.set('resetPassword', this.params.token);
-		Session.set("loginMode", "RECOVER");
-	}
+    //Used for password recovery. If URL has a recovery token, it is 
+    //stored in resetPasswordToken
+    if (this.params.token) {
+        Session.set('resetPassword', this.params.token);
+        Session.set("loginMode", "RECOVER");
+    }
     
     this.render("welcome", {to: "body"});  
 });
@@ -36,7 +36,7 @@ Router.route('/draw', function () {
     if (Meteor.userId()) {
         this.render("draw", {to: "body"});  
     } else {
-    	//Not logged in? Go to welcome screen
+        //Not logged in? Go to welcome screen
         Router.go("/");
     }
 });
