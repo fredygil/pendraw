@@ -1,4 +1,15 @@
 <template name="draw">
-    <h1>This is the main drawing screen</h1>
-    <a href="#" class="sign-out">Sign Out</a>
+    <div id="main-container">
+        <div class="left">
+            <div id="palette-container">
+                {{> palette}}
+            </div>
+            <div id="toolbar-container">
+            </div>
+        </div>
+        <div class="right">
+            <div id="canvas-container">
+            </div>
+        </div>
+    </div>
 </template>
