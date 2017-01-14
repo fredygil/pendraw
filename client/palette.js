@@ -1,6 +1,9 @@
 Template.palette.rendered = function() {
+    //Set default color
+    Session.set('currentColor', '#0000ff');
+    
     $('#color-picker').colorpicker({ 
-        color: '#0000ff', 
+        color: Session.get('currentColor'), 
         container: true, 
         inline: true,
         format: 'rgb',
@@ -14,5 +17,7 @@ Template.palette.rendered = function() {
                         maxTop: 200
                     }
         } 
+    }).on('changeColor', function(e) { 
+        Session.set("currentColor", e.color.toString('rgb'));
     });
 }

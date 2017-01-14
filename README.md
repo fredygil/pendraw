@@ -13,6 +13,7 @@ This app is developed as a capstone project for **Coursera's** [Responsive Websi
 *	[Accounts UI Unstyled](https://atmospherejs.com/meteor/accounts-ui-unstyled)
 *	[Iron Router](https://atmospherejs.com/iron)
 *   [Bootstrap Color Picker](https://atmospherejs.com/risul/bootstrap-colorpicker)
+*   [Font Awesome](https://atmospherejs.com/fortawesome/fontawesome)
 
 ## Credits
 

@@ -1,0 +1,13 @@
+#strokes-container {
+    font-size: 65%;
+}
+
+.stroke-width {
+    height: 100%;
+    text-align: center;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+}

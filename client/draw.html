@@ -1,10 +1,16 @@
 <template name="draw">
     <div id="main-container">
         <div class="left">
-            <div id="palette-container">
-                {{> palette}}
+            <div id="palette-container" class="row">
+                <div class="col-md-12"> 
+                    {{> palette}}
+                </div>
             </div>
-            <div id="toolbar-container">
+            <div id="strokes-container" class="row shadow-container">
+                {{> strokes_widths}}
+            </div>
+            <div id="toolbar-container" class="row">
+                {{> toolbar}}
             </div>
         </div>
         <div class="right">

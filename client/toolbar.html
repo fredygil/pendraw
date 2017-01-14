@@ -1,0 +1,46 @@
+<template name="toolbar">
+    <div id="toolbar">
+
+
+        <ul class="list-group toolbar_items">
+            <li class="list-group-item toolbar_item">
+                <button type="button" class="btn btn-default  drawing-tool" data-tool="Pencil" aria-label="Pencil">
+                    <i class="fa fa-paint-brush"></i> Brush
+                </button>
+            </li>
+            <li class="list-group-item toolbar_item">
+                <button type="button" class="btn btn-default  drawing-tool" data-tool="Circle" aria-label="Circle">
+                    <i class="fa fa-circle"></i> Circle
+                </button>
+            </li>
+            <li class="list-group-item toolbar_item">
+                <button type="button" class="btn btn-default  drawing-tool" data-tool="Spray" aria-label="Spray">
+                    <i class="fa fa-snowflake-o"></i> Spray
+                </button>
+            </li>
+            <li class="list-group-item toolbar_item">
+                <button type="button" id="new-draw" class="btn btn-default  js-new-draw" aria-label="New">
+                    <i class="fa fa-plus"></i> New
+                </button>
+            </li>
+            <li class="list-group-item toolbar_item">
+                <button type="button" id="open-draws" class="btn btn-default  js-open-draws" aria-label="Open">
+                    <i class="fa fa-folder-open"></i> Open
+                </button>
+            </li>
+            <li class="list-group-item toolbar_item">
+                <button type="button" id="clear-canvas" class="btn btn-default  js-clear-canvas" aria-label="Remove">
+                    <i class="fa fa-eraser"></i> Clear
+                </button>
+            </li>
+            <li class="list-group-item toolbar_item">
+                <button type="button" id="log-out" class="btn btn-default  js-log-out" aria-label="Log out">
+                    <i class="fa fa-sign-out"></i> Logout
+                </button>
+            </li>
+        </ul>
+
+        <input type="hidden" value="0" min="0" max="50" id="drawing-shadow-width">
+        <input type="hidden" value="0" min="0" max="50" id="drawing-shadow-offset">
+    </div>
+</template>

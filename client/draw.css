@@ -1,0 +1,28 @@
+#main-container {
+    padding: 5px;
+}
+
+#main-container .left {
+    width: 150px;
+    position: relative;
+    float: left;
+}
+
+#top-tools-container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.shadow-container {
+    margin-left: 1px;
+    width: 142px;
+    background-color: transparent;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);  
+}

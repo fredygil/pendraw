@@ -2,10 +2,6 @@
     display: inline-block; 
 }
 
-#main-container {
-    padding: 5px;
-}
-
 .colorpicker-large .colorpicker-saturation {
     width: 100px;
     height: 200px;
@@ -19,6 +15,6 @@
 
 .colorpicker-large .colorpicker-color,
 .colorpicker-large .colorpicker-color div {
-    height: 30px;
+    display: none;
 }
 
