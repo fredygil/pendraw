@@ -14,5 +14,14 @@ Meteor.autorun(function() {
         UIkit.notify(messageText, {status: messageStatus});
         Session.set('displayMessage', null);
     }
+
+    //Change current color? Updates drawing color
+    var currentColor = Session.get('currentColor');
+    var lastColor = Session.get('lastColor');
+    if (currentColor != lastColor) {
+        if (this.__canvas.freeDrawingBrush)
+            this.__canvas.freeDrawingBrush.color = Session.get("currentColor");
+        Session.set('lastColor', currentColor);
+    }
 });
 

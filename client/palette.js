@@ -1,6 +1,7 @@
 Template.palette.rendered = function() {
-    //Set default color
+    //Set default color and last used color
     Session.set('currentColor', '#0000ff');
+    Session.set('lastColor', '#0000ff');
     
     $('#color-picker').colorpicker({ 
         color: Session.get('currentColor'), 
