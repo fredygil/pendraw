@@ -1,57 +1,9 @@
 #toolbar-container {
-    width: 100%;
+    margin-top: 5px;
+    padding-top: 4px;
 }
 
-li.color_item span.glyphicon-tint {
-    font-size: 2em;
-    text-align: center;
+.toolbar {
+    padding: 2px;
 }
 
-ul.toolbar_items, ul.toolbar_items li {
-    background-color: transparent;
-}
-
-li.toolbar_item {
-    width: 80%;
-    margin: 0 auto;
-}
-
-li.toolbar_item button {
-    width: 100%;
-}
-
-li.toolbar_item span.glyphicon {
-    font-size: 2em;
-    text-align: center;
-}
-
-#toolbar .list-group-item {
-    border: none;
-}
-
-#drawingLineWidths a {
-    width: 90%;
-    height: 30px;
-    margin: 0 auto;
-    display: inline-block;
-    /*border: 5px solid #FFF;*/
-}
-
-#drawingLineWidths a.list-group-item {
-    /*padding: 5px 5px; */
-    border: 1px dashed;   
-    background-color: rgb(224, 224, 224);
-}
-
-#drawingLineWidths a.list-group-item.active {
-    border: 2px solid black;   
-}
-
-#drawingLineWidths span {
-    display: block;
-    position: relative;
-    top: 50%;
-    width: 80%;
-    background-color: black;
-    margin: 0 auto;
-}

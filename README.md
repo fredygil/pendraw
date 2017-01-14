@@ -21,3 +21,4 @@ This app is developed as a capstone project for **Coursera's** [Responsive Websi
 *	[Ben McMahen](http://benmcmahen.com/) for his article on [Building a customized accounts ui for Meteor](http://blog.benmcmahen.com/post/41741539120/building-a-customized-accounts-ui-for-meteor)
 *   Article on [Customizing Bootstrap colorpicker](http://figure.openmicroscopy.org/2015/02/24/customizing-bootstrap-colorpicker.html) from OMERO.figure blog
 *   Drawing icons pack by [Freepik](http://www.freepik.com/) from [Flaticon](http://www.flaticon.com/authors/freepik)
+*   Files icons pack by [Roundicons](https://roundicons.com/) from [Flaticon](http://www.flaticon.com/authors/roundicons)
