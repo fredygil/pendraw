@@ -6,19 +6,24 @@
                     {{> palette}}
                 </div>
             </div>
-            <div id="strokes-container" class="row shadow-container">
+            <div id="strokes-container" class="row shadow-container container-left">
                 {{> strokes_widths}}
             </div>
-            <div id="paint-brushes-container" class="row shadow-container">
+            <div id="paint-brushes-container" class="row shadow-container container-left">
                 {{> paint_brushes}}
             </div>
-            <div id="toolbar-container" class="row shadow-container">
+            <div id="toolbar-container" class="row shadow-container container-left">
                 {{> toolbar}}
             </div>
         </div>
         <div class="right">
-            <div id="canvas-container">
+            <div id="canvas-metadata" class="row shadow-container container-right">
+                {{> metadata}}
+            </div>
+            <div id="canvas-container" class="row shadow-container container-right">
+                {{> canvas}}
             </div>
         </div>
+        <div class="clear"></div>
     </div>
 </template>

@@ -1,38 +1,5 @@
 <template name="canvas">
-    <div class="row">
-        {{#if titleStatus "READ"}}
-            <div class="col-xs-8 col-md-6 canvas_title">
-                <h2>{{title}}</h2>
-            </div>
-            <div class="col-xs-4 col-md-6 canvas_title">
-                <div class="view_title_right text-right">
-                    <div class="checkbox private_title">
-                        <label>
-                            <input type="checkbox" name="privacy" {{isChecked}} class="js-set-privacy"> Private
-                        </label>
-                    </div>
-                    <div class="rename_title">
-                        <button type="button" class="btn btn-default js-edit-title">
-                            <i class="fa fa-edit"></i> Rename
-                        </button>
-                    </div>
-                </div>
-            </div>
-        {{/if}}
-        {{#if titleStatus "WRITE"}}
-        <div class="col-xs-12 col-md-12 edit_title">
-            <form class="form-inline form_edit_title">
-                <div class="form-group">
-                    <label for="title">Draw Name</label>
-                    <input type="text" class="form-control" id="title" name="title" value="{{title}}" size="50">
-                </div>
-                <button type="submit" class="btn btn-default js-save-title">Save</button>
-                <button type="button" class="btn btn-default js-cancel-title">Cancel</button>
-            </form>
-        </div>
-        {{/if}}
-        <div class="col-xs-12 col-md-12 canvas_content">
-            <canvas id="canvas" data-draw-id="{{drawId}}"></canvas>
-        </div>
+    <div class="col-xs-12 col-md-12 np">
+        <canvas id="canvas" data-draw-id="{{drawId}}"></canvas>
     </div>
 </template>

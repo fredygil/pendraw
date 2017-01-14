@@ -15,10 +15,14 @@ This app is developed as a capstone project for **Coursera's** [Responsive Websi
 *   [Bootstrap Color Picker](https://atmospherejs.com/risul/bootstrap-colorpicker)
 *   [Font Awesome](https://atmospherejs.com/fortawesome/fontawesome)
 
+## Other projects, libraries, icons
+
+*   [Fabric.js](http://fabricjs.com/), an amazing HTML5 canvas library
+*   Drawing icons pack by [Freepik](http://www.freepik.com/) from [Flaticon](http://www.flaticon.com/authors/freepik)
+*   Files icons pack by [Roundicons](https://roundicons.com/) from [Flaticon](http://www.flaticon.com/authors/Roundicons)
+
 ## Credits
 
 *	Thanks to [Mohan Khadka](http://www.mohankhadka.com.np/) for his great [Login Form](http://codepen.io/khadkamhn/pen/ZGvPLo)
 *	[Ben McMahen](http://benmcmahen.com/) for his article on [Building a customized accounts ui for Meteor](http://blog.benmcmahen.com/post/41741539120/building-a-customized-accounts-ui-for-meteor)
 *   Article on [Customizing Bootstrap colorpicker](http://figure.openmicroscopy.org/2015/02/24/customizing-bootstrap-colorpicker.html) from OMERO.figure blog
-*   Drawing icons pack by [Freepik](http://www.freepik.com/) from [Flaticon](http://www.flaticon.com/authors/freepik)
-*   Files icons pack by [Roundicons](https://roundicons.com/) from [Flaticon](http://www.flaticon.com/authors/roundicons)
