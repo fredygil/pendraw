@@ -14,6 +14,5 @@ Meteor.autorun(function() {
         UIkit.notify(messageText, {status: messageStatus});
         Session.set('displayMessage', null);
     }
-
 });
 

@@ -1,14 +1,39 @@
+Template.canvas.onCreated = function() {
+    Meteor.subscribe("draws");
+    Meteor.subscribe("actions");
+}
+
+
 Template.canvas.created = function() {
     //Defaults
     Session.setDefault("strokeWidth", "3");
-
-    //renderCurrentDraw();
+    Session.setDefault("objectsCount", 0);
+    //Version of the rendered canvas
+    Session.set("renderedVersion", 0);
 }
 
 Template.canvas.onRendered(function() {
     //Init fabric.js stuff
     initFabricDrawing();
+    //Renders a draw, i.e., last one created by the user or one opened or
+    //a new empty canvas
+    drawChanges();
 });
+
+
+//Checks if there is a new version of the draw
+Meteor.autorun(function() {
+    var renderedVersion = Session.get("renderedVersion");
+    var draw = Session.get("currentDraw");
+    if (draw){
+        var latestDraw = Draws.findOne({_id: draw._id});
+        if (latestDraw){
+            if (latestDraw.version > renderedVersion)
+                drawChanges();
+        }
+    }
+});
+
 
 //Init fabric.js stuff
 function initFabricDrawing(){
@@ -30,8 +55,61 @@ function initFabricDrawing(){
         canvas.freeDrawingBrush.shadowBlur = 0;
     }    
 
-    //renderCurrentDraw();
-    //canvas.on('object:added', newCanvasObject);
+    //Call this function each time a new object is added to canvas
+    canvas.on('object:added', newCanvasObject);
+}
+
+
+function drawChanges(){
+    //Add objects from database to canvas and render it
+    var currentDraw = Session.get("currentDraw");
+    if (currentDraw) {
+        var lastDraw = Draws.findOne({_id: currentDraw._id});
+        if (lastDraw && lastDraw.version > Session.get("renderedVersion")){
+            // var actions = Actions.find({$and: [{drawId: draw._id}, {version: { $gt: Session.get("renderedVersion")}}]}, 
+            //                            {sort: {version: 1}}).fetch();
+            /*
+            * TODO: This is loading and rendering all revisions. Must load only last revisions
+            *       and draw then on the canvas
+            */
+            var actions = Actions.find({drawId: draw._id}, 
+                                       {sort: {version: 1}}).fetch();
+
+            if (mainCanvas && actions){
+                //Add each object to an array
+                var objects = new Array();
+                actions.forEach(function(action){
+                    objects.push(action.object);
+                });
+                //Initially, asummes that all actions are of type 'add'
+                //Stops object:added event listener
+                mainCanvas.off('object:added');
+                mainCanvas.loadFromJSON({objects: objects});
+                mainCanvas.renderAll();
+                //Starts listening again for this event
+                mainCanvas.on('object:added', newCanvasObject);
+                Session.set("renderedVersion", lastDraw.version);
+                Session.set("currentDraw", lastDraw);
+            }
+        }
+    }
+
+}
+
+
+function newCanvasObject(options){
+    //Logs the action for the new object
+    //Returns and updated draw object and set it in the session
+    var jsonCanvas = mainCanvas.toJSON();
+    var lastObject = jsonCanvas.objects[jsonCanvas.objects.length - 1];
+    Meteor.call("addDrawObject", Session.get("currentDraw"), lastObject, function(err, result){
+        if (!err && result){
+            Session.set("currentDraw", result);
+        }
+    });
+
+    //Updates objectsCount
+    Session.set("objectsCount", Session.get("objectsCount") + 1);
 }
 
 //Resize canvas. Takes all width and all height minus 10px

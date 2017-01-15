@@ -1,3 +1,6 @@
+Meteor.subscribe("draws");
+Meteor.subscribe("actions");
+
 Router.configure({
   layoutTemplate: 'layout'
 });
@@ -34,6 +37,7 @@ Router.route('/reset-password/:token', function () {
 // After Sign In or Sign Up, shows drawing canvas
 Router.route('/draw', function () {
     if (Meteor.userId()) {
+        setupCurrentDraw();
         this.render("draw", {to: "body"});  
     } else {
         //Not logged in? Go to welcome screen
@@ -41,3 +45,21 @@ Router.route('/draw', function () {
     }
 });
 
+
+// Helper to make sure a draw is available
+function setupCurrentDraw(){
+    //Get the last created draw or creates a first one
+    if (Meteor.userId()){
+        draw = Draws.findOne({owner: Meteor.userId()}, {sort: {createdOn: -1}, limit: 1});
+        if (draw){
+            Session.set("currentDraw", draw);
+        } else {
+            //Creates a new draw to start with
+            Meteor.call("createFirstDraw", function(err, result){
+                if (!err && result){
+                    Session.set("currentDraw", result);
+                }
+            });
+        }
+    }
+}

@@ -9,3 +9,20 @@ Meteor.startup(function() {
     };
     
 });
+
+//Publish draws where current user is owner or are public or
+//are shared with the current user
+Meteor.publish("draws", function(){
+    return Draws.find({
+        $or: [
+            {owner: this.userId},
+            {private: false},
+            {sharedUsers: this.userId}
+            ]
+    }); 
+});
+
+//Only publish actions for current draw
+Meteor.publish("actions", function(){
+    return Actions.find({});
+});
