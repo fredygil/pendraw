@@ -4,15 +4,13 @@ Template.canvas.onCreated = function() {
 }
 
 
-Template.canvas.created = function() {
+Template.canvas.onRendered(function() {
     //Defaults
-    Session.setDefault("strokeWidth", "3");
-    Session.setDefault("objectsCount", 0);
+    Session.set("strokeWidth", "3");
+    Session.set("objectsCount", 0);
     //Version of the rendered canvas
     Session.set("renderedVersion", 0);
-}
 
-Template.canvas.onRendered(function() {
     //Init fabric.js stuff
     initFabricDrawing();
     //Renders a draw, i.e., last one created by the user or one opened or
@@ -28,7 +26,8 @@ Meteor.autorun(function() {
     if (draw){
         var latestDraw = Draws.findOne({_id: draw._id});
         if (latestDraw){
-            if (latestDraw.version > renderedVersion)
+            //New objects or canvas cleared
+            if (latestDraw.version > renderedVersion || (latestDraw.version == 0 && renderedVersion > 0))
                 drawChanges();
         }
     }
@@ -65,6 +64,11 @@ function drawChanges(){
     var currentDraw = Session.get("currentDraw");
     if (currentDraw) {
         var lastDraw = Draws.findOne({_id: currentDraw._id});
+        if (lastDraw && Session.get("renderedVersion") > 0 && lastDraw.version == 0){
+            mainCanvas.clear();
+            Session.set("renderedVersion", lastDraw.version);
+            Session.set("currentDraw", lastDraw);
+        }
         if (lastDraw && lastDraw.version > Session.get("renderedVersion")){
             // var actions = Actions.find({$and: [{drawId: draw._id}, {version: { $gt: Session.get("renderedVersion")}}]}, 
             //                            {sort: {version: 1}}).fetch();
@@ -114,10 +118,11 @@ function newCanvasObject(options){
 
 //Resize canvas. Takes all width and all height minus 10px
 function resizeCanvas(){
-    var width = $('#canvas-container').width();
-    var height = $(window).innerHeight() - $('#canvas-container').position().top - 10;
-    //var canvas = this.__canvas;
+    if ($('#canvas-container').length){
+        var width = $('#canvas-container').width();
+        var height = $(window).innerHeight() - $('#canvas-container').position().top - 10;
 
-    mainCanvas.setWidth(width);
-    mainCanvas.setHeight(height);
+        mainCanvas.setWidth(width);
+        mainCanvas.setHeight(height);
+    }
 }

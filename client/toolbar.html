@@ -1,22 +1,9 @@
 <template name="toolbar">
-    <div class="col-md-6">
-        <a href="#" class="toolbar toolbar-open" title="Open Draw">
-            <img src="files_icons/pictures.svg" alt="Open Draw Icon">   
-        </a>
-    </div>
-    <div class="col-md-6">
-        <a href="#" class="toolbar toolbar-new" title="New Draw">
-            <img src="files_icons/add-image.svg" alt="New Draw Icon">   
-        </a>
-    </div>
-    <div class="col-md-6">
-        <a href="#" class="toolbar toolbar-remove" title="Remove Draw">
-            <img src="files_icons/image-3.svg" alt="Remove Draw Icon">   
-        </a>
-    </div>
-    <div class="col-md-6">
-        <a href="#" class="toolbar toolbar-logout" title="Sign Out">
-            <img src="files_icons/logout.svg" alt="Sign Out Draw Icon">   
-        </a>
-    </div>
+    {{#each tools}}
+        <div class="col-md-6">
+            <a href="#" class="toolbar toolbar-{{name}}" title="{{title}}">
+                <img src="files_icons/{{icon}}" alt="{{title}} Icon">   
+            </a>
+        </div>
+    {{/each}}
 </template>

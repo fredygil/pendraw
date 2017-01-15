@@ -9,18 +9,6 @@ Meteor.methods({
         else {
             //There is now draws for the user? Creates a new one
             if (Draws.find({owner: this.userId}).count() == 0){
-                // var date = new Date();
-                // draw = {
-                //     owner: this.userId, 
-                //     createdOn: date, 
-                //     lastUpdate: date,
-                //     title: "My New Draw",
-                //     version: 0,
-                //     size: 0,
-                //     private: true
-                // };
-                // var id = Draws.insert(draw);
-                // return Draws.findOne({_id: id});
                 return newDraw(this.userId);
             } else {
                 return Draws.findOne({owner: this.userId}, {sort: {createdOn: -1}, limit: 1});
@@ -57,6 +45,18 @@ Meteor.methods({
             }
         });
         return Draws.findOne({_id: draw._id});
+    },
+    removeDrawContent: function(drawId){
+        Actions.remove({drawId: drawId});
+        //Updates draw metadata
+        Draws.update({_id: drawId}, {$set: {
+                version: 0, 
+                size: 0,
+                lastUpdate: new Date()
+            }
+        });
+
+        return Draws.findOne({_id: drawId});
     }
 });
 

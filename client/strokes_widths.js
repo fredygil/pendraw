@@ -1,5 +1,3 @@
-import './canvas.js';
-
 Template.strokes_widths.helpers({
     lineWidth: function(){
         return Session.get("strokeWidth");
