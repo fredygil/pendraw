@@ -1,4 +1,8 @@
 Template.canvas.created = function() {
+    //Defaults
+    Session.setDefault("strokeWidth", "3");
+
+
     //renderCurrentDraw();
 }
 
@@ -11,7 +15,7 @@ Template.canvas.onRendered(function() {
 function initFabricDrawing(){
 
     //Create the canvas for drawing and assign it to this.__canvas
-    var canvas = this.__canvas = new fabric.Canvas('canvas', {
+    var canvas = mainCanvas = this.__canvas = new fabric.Canvas('canvas', {
         isDrawingMode: true
     });
 
@@ -23,7 +27,7 @@ function initFabricDrawing(){
     //First drawing brush
     if (canvas.freeDrawingBrush) {
         canvas.freeDrawingBrush.color = Session.get("currentColor");
-        canvas.freeDrawingBrush.width = parseInt(Session.get("drawingLineWidth"), 10) || 1;
+        canvas.freeDrawingBrush.width = parseInt(Session.get("strokeWidth"), 10) || 3;
         canvas.freeDrawingBrush.shadowBlur = 0;
     }    
 
@@ -35,8 +39,8 @@ function initFabricDrawing(){
 function resizeCanvas(){
     var width = $('#canvas-container').width();
     var height = $(window).innerHeight() - $('#canvas-container').position().top - 10;
-    var canvas = this.__canvas;
+    //var canvas = this.__canvas;
 
-    canvas.setWidth(width);
-    canvas.setHeight(height);
+    mainCanvas.setWidth(width);
+    mainCanvas.setHeight(height);
 }

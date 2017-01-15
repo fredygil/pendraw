@@ -1,7 +1,10 @@
 <template name="strokes_widths">
     {{#each strokesWidths}}
-        <div class="col-md-6 stroke-width" style="color: {{currentColor}};">
-            <i class="fa fa-circle {{size}}"></i>   
-        </div>
+        <a href="#" class="js-set-stroke-width" data-width="{{width}}">
+            <div class="col-md-6 stroke-width {{#if currentWidth width}} active {{/if}}" 
+                 data-width="{{width}}" style="color: {{currentColor}};">
+                <i class="fa fa-circle {{size}}" data-width="{{width}}"></i>   
+            </div>
+        </a>
     {{/each}}
 </template>

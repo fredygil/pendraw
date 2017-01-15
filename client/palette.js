@@ -20,5 +20,7 @@ Template.palette.rendered = function() {
         } 
     }).on('changeColor', function(e) { 
         Session.set("currentColor", e.color.toString('rgb'));
+        if (mainCanvas && mainCanvas.freeDrawingBrush)
+            mainCanvas.freeDrawingBrush.color = Session.get("currentColor");
     });
 }
