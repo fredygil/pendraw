@@ -24,3 +24,6 @@ div.np {
     padding: 0;
 }
 
+a, a:active, a:focus {
+    outline: none;
+}

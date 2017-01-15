@@ -18,8 +18,9 @@ This app is developed as a capstone project for **Coursera's** [Responsive Websi
 ## Other projects, libraries, icons
 
 *   [Fabric.js](http://fabricjs.com/), an amazing HTML5 canvas library
-*   Drawing icons pack by [Freepik](http://www.freepik.com/) from [Flaticon](http://www.flaticon.com/authors/freepik)
 *   Files icons pack by [Roundicons](https://roundicons.com/) from [Flaticon](http://www.flaticon.com/authors/Roundicons)
+*   <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>iv>
+*   <div>Icons made by <a href="http://www.flaticon.com/authors/google" title="Google">Google</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 ## Credits
 

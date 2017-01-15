@@ -2,7 +2,6 @@ Template.canvas.created = function() {
     //Defaults
     Session.setDefault("strokeWidth", "3");
 
-
     //renderCurrentDraw();
 }
 
