@@ -27,3 +27,4 @@ This app is developed as a capstone project for **Coursera's** [Responsive Websi
 *	Thanks to [Mohan Khadka](http://www.mohankhadka.com.np/) for his great [Login Form](http://codepen.io/khadkamhn/pen/ZGvPLo)
 *	[Ben McMahen](http://benmcmahen.com/) for his article on [Building a customized accounts ui for Meteor](http://blog.benmcmahen.com/post/41741539120/building-a-customized-accounts-ui-for-meteor)
 *   Article on [Customizing Bootstrap colorpicker](http://figure.openmicroscopy.org/2015/02/24/customizing-bootstrap-colorpicker.html) from OMERO.figure blog
+* [This JSFiddle](http://jsfiddle.net/sFGGV/30/) shows how to add new objects to an existing Fabric.js canvas

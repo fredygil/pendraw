@@ -64,20 +64,20 @@ function drawChanges(){
     var currentDraw = Session.get("currentDraw");
     if (currentDraw) {
         var lastDraw = Draws.findOne({_id: currentDraw._id});
-        if (lastDraw && Session.get("renderedVersion") > 0 && lastDraw.version == 0){
+        if (mainCanvas && lastDraw && Session.get("renderedVersion") > 0 && lastDraw.version == 0){
             mainCanvas.clear();
             Session.set("renderedVersion", lastDraw.version);
             Session.set("currentDraw", lastDraw);
         }
         if (lastDraw && lastDraw.version > Session.get("renderedVersion")){
-            // var actions = Actions.find({$and: [{drawId: draw._id}, {version: { $gt: Session.get("renderedVersion")}}]}, 
-            //                            {sort: {version: 1}}).fetch();
+            var actions = Actions.find({$and: [{drawId: draw._id}, {version: { $gt: Session.get("renderedVersion")}}]}, 
+                                       {sort: {version: 1}}).fetch();
             /*
             * TODO: This is loading and rendering all revisions. Must load only last revisions
-            *       and draw then on the canvas
+            *       and draw them on the canvas
             */
-            var actions = Actions.find({drawId: draw._id}, 
-                                       {sort: {version: 1}}).fetch();
+            // var actions = Actions.find({drawId: draw._id}, 
+            //                            {sort: {version: 1}}).fetch();
 
             if (mainCanvas && actions){
                 //Add each object to an array
@@ -86,18 +86,36 @@ function drawChanges(){
                     objects.push(action.object);
                 });
                 //Initially, asummes that all actions are of type 'add'
-                //Stops object:added event listener
+                //Stops object:added event listener (to avoid recursion)
                 mainCanvas.off('object:added');
-                mainCanvas.loadFromJSON({objects: objects});
+                //Draw new objects
+                drawNewObjects(objects);
                 mainCanvas.renderAll();
                 //Starts listening again for this event
                 mainCanvas.on('object:added', newCanvasObject);
+                //Updates session variables
                 Session.set("renderedVersion", lastDraw.version);
                 Session.set("currentDraw", lastDraw);
             }
         }
     }
 
+}
+
+//Add new objects to mainCanvas
+//Credits: http://stackoverflow.com/questions/27972454/canvas-fabric-js-loadfromjson-replaces-entire-canvas
+//Credits: http://jsfiddle.net/sFGGV/30/
+function drawNewObjects(objects){
+    for (var i = 0; i < objects.length; i++) {
+        var klass = fabric.util.getKlass(objects[i].type);
+        if (klass.async) {
+            klass.fromObject(objects[i], function (img) {
+                mainCanvas.add(img);
+            });
+        } else {
+            mainCanvas.add(klass.fromObject(objects[i]));
+        }
+    }
 }
 
 
