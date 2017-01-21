@@ -70,14 +70,9 @@ function drawChanges(){
             Session.set("currentDraw", lastDraw);
         }
         if (lastDraw && lastDraw.version > Session.get("renderedVersion")){
+            //Get last actions (not yet rendered) and render them
             var actions = Actions.find({$and: [{drawId: draw._id}, {version: { $gt: Session.get("renderedVersion")}}]}, 
                                        {sort: {version: 1}}).fetch();
-            /*
-            * TODO: This is loading and rendering all revisions. Must load only last revisions
-            *       and draw them on the canvas
-            */
-            // var actions = Actions.find({drawId: draw._id}, 
-            //                            {sort: {version: 1}}).fetch();
 
             if (mainCanvas && actions){
                 //Add each object to an array
@@ -90,6 +85,7 @@ function drawChanges(){
                 mainCanvas.off('object:added');
                 //Draw new objects
                 drawNewObjects(objects);
+                //Draw added objects on mainCanvas
                 mainCanvas.renderAll();
                 //Starts listening again for this event
                 mainCanvas.on('object:added', newCanvasObject);
@@ -118,7 +114,7 @@ function drawNewObjects(objects){
     }
 }
 
-
+//Logs each new object added to canvas
 function newCanvasObject(options){
     //Logs the action for the new object
     //Returns and updated draw object and set it in the session

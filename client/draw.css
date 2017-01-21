@@ -30,3 +30,30 @@
 .container-right {
     margin: 2px;
 }
+
+#canvas-metadata, input.wide-text-edit {
+    background-color: #2196F3;
+    color: #FFFFFF;
+}
+
+.draw-title {
+    line-height: 1.2em;
+    font-size: 1em;
+    padding: 0;
+}
+
+input.wide-text-edit {
+    font-size: 1.3em;
+}
+
+
+.draw-metadata a:active, .draw-metadata a:hover, 
+.draw-metadata a:visited, .draw-metadata a:link {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.draw-metadata a:hover {
+    font-size: 1.3em;
+}
+

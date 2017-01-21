@@ -1,5 +1,35 @@
 <template name="metadata">
     <div class="col-md-12">
-        <p>Draw info: name, sharing status, current editors</p>
+        <span class="draw-title">{{> editableText context=currentDraw collection="draws" field="title"}}</span>
     </div>
+    <div class="col-md-12 draw-metadata">
+        <span class="draw-share">
+            <a href="#" data-toggle="modal" data-target="#shareModal" class="js-share-draw">
+                <i class="fa fa-share-alt" aria-hidden="true">
+                    Share
+                </i>
+            </a>
+        </span>
+    </div>
+    {{> share_draw}}
+</template>
+
+<template name="share_draw">
+    <!-- Modal -->
+    <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Share {{drawName}}</h4>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>    
 </template>

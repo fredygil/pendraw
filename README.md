@@ -14,6 +14,7 @@ This app is developed as a capstone project for **Coursera's** [Responsive Websi
 *	[Iron Router](https://atmospherejs.com/iron)
 *   [Bootstrap Color Picker](https://atmospherejs.com/risul/bootstrap-colorpicker)
 *   [Font Awesome](https://atmospherejs.com/fortawesome/fontawesome)
+*   [Editable Text from Jack Adams](https://atmospherejs.com/babrahams/editable-text)
 
 ## Other projects, libraries, icons
 

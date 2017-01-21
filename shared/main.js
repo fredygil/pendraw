@@ -57,6 +57,21 @@ Meteor.methods({
         });
 
         return Draws.findOne({_id: drawId});
+    },
+    changeDrawPrivacy: function(draw){
+        //Draw must be owned by current user
+        if (!draw)
+            return;
+        if (this.userId != draw.owner)
+            return;
+        Draws.update({_id: draw._id}, {$set: {
+                lastUpdate: new Date(),
+                private: !draw.private
+            }
+        });
+
+        return Draws.findOne({_id: draw._id});
+
     }
 });
 

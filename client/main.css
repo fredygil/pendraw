@@ -27,3 +27,9 @@ div.np {
 a, a:active, a:focus {
     outline: none;
 }
+
+.editable-text:hover { 
+  padding: 0 5px; 
+  outline: 2px dashed #FF9800; 
+  font-size: 1.3em;
+}

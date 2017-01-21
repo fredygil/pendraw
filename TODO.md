@@ -1,6 +1,6 @@
 MAIN
 
-- [ ] Allow draw name editing
+- [x] Allow draw name editing
 - [ ] Allow draw sharing
 - [ ] Add option for open any draw from history
 - [ ] Allow adding new empty draws
