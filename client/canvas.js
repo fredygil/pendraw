@@ -3,6 +3,7 @@ Template.canvas.onCreated = function() {
     Meteor.subscribe("actions");
     Meteor.subscribe("shares");
     Meteor.subscribe('allUsers')
+    Meteor.subscribe('templates')
 }
 
 

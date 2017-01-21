@@ -16,6 +16,10 @@ Meteor.methods({
         }
         return;
     },
+    //Creates a new empty draw
+    newDraw: function(){
+        return newDraw(this.userId);
+    },
     //add new object to current draw
     addDrawObject: function(draw, object){
         if (!this.userId){// not logged in

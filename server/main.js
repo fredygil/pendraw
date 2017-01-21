@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 
 Meteor.startup(function() {
     
@@ -7,7 +6,16 @@ Meteor.startup(function() {
     Accounts.urls.resetPassword = function(token) {
         return Meteor.absoluteUrl('reset-password/' + token);
     };
-    
+
+    //Create drawing templates
+    if (!Templates.findOne()){
+        var templates = [{extension: 'svg', files: 2}, {extension: 'png', files: 7}];
+        templates.forEach(function(template){
+            for (i=1; i<=template.files; i++){
+                Templates.insert({file: i + '.' + template.extension});
+            }
+        });
+    }
 });
 
 //Publish draws where current user is owner or are public or
@@ -32,6 +40,13 @@ Meteor.publish("shares", function(){
     return Shares.find({});
 });
 
- Meteor.publish('allUsers', function() {
+//Users for email searching
+Meteor.publish('allUsers', function() {
     return Meteor.users.find({});
 });
+
+//Draws templates
+Meteor.publish('templates', function() {
+    return Templates.find({});
+});
+

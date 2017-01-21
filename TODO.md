@@ -3,8 +3,8 @@ MAIN
 - [x] Allow draw name editing
 - [x] Allow draw sharing
 - [ ] Add option for open any draw from history
-- [ ] Allow adding new empty draws
-- [ ] Allos adding new draws from templates
+- [x] Allow adding new empty draws
+- [x] Allow adding draws templates to current canvas
 - [ ] Allow rendering add and remove actions
 - [ ] Allow user to upload pictures from device
 - [ ] Allow user to copy a draw
@@ -20,6 +20,7 @@ UI
 - [ ] Add redo button
 - [ ] Ask confirmation when clearing a draw
 - [ ] Ask confirmation when removing a draw
+- [x] Allow individual object manipulation
 
 BACKEND
 - [ ] Register object undo/redo actions

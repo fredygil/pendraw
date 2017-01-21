@@ -2,7 +2,7 @@ Template.toolbar.helpers({
     tools: function(){
         var tools = [
                     // {name: "open", icon: "pictures.svg", title: "Open Draw"}
-                    // {name: "new", icon: "add-image.svg", title: "New Draw"}, 
+                    {name: "new", icon: "add-image.svg", title: "New Draw"}, 
                     {name: "clear", icon: "image-3.svg", title: "Clear Draw"}, 
                     {name: "logout", icon: "logout.svg", title: "Sign Out"}
                     ];
@@ -39,5 +39,18 @@ Template.toolbar.events({
                 }
             });
         }
-    }
+    },
+    'click .toolbar-new': function(e){
+        e.preventDefault();
+        Meteor.call("newDraw", function(err, result){
+            if (err){
+                Session.set("displayMessage", err);
+            } else {
+                Session.set("displayMessage", {message: "New draw created", status: "success"});
+                Session.set("renderedVersion", "0");
+                Session.set("currentDraw", result);
+            }
+        });
+    },
+
 });
