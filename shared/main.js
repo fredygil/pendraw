@@ -31,6 +31,7 @@ Meteor.methods({
         var lastUpdate = new Date();
         var action = {
             drawId: draw._id,
+            userId: this.userId,
             version: lastVersion + 1,
             action: "add",
             object: object,
@@ -72,6 +73,54 @@ Meteor.methods({
 
         return Draws.findOne({_id: draw._id});
 
+    },
+    saveSharing: function(draw, user, permission){
+        if (!draw)
+            throw new Meteor.Error( 500, "There is no current draw");
+        if (!user)
+            throw new Meteor.Error( 500, "Shared user doesn't exist");
+        //Draw must be owned by current user
+        if (this.userId != draw.owner)
+            throw new Meteor.Error( 500, "Can't share draw from other user");
+        //Check user is different from owner
+        if (user._id == this.userId)
+            throw new Meteor.Error( 500, "You are the owner of the current draw");
+        //Check this draw isn't shared with the user yet
+        var share = Shares.findOne({drawId: draw._id, userId: user._id});
+        if (share) {
+            throw new Meteor.Error( 500, "Draw is already shared with " + user.emails[0].address);
+        }
+
+        //Insert new sharing
+        var r = Shares.insert({
+            drawId: draw._id,
+            userId: user._id,
+            userEmail: user.emails[0].address,
+            permission: permission
+        });
+        return r;
+    },
+    updateSharePermission: function(shareId, permission){
+        //Check share existence
+        var share = Shares.findOne({_id: shareId});
+        if (!share)
+            throw new Meteor.Error( 500, "Share doesn't exists");
+
+        var r = Shares.update({_id: shareId},
+            {$set: {
+                permission: permission
+            }}
+        );
+        return r;
+    },
+    removeSharePermission: function(shareId){
+        //Check share existence
+        console.log("Removing share " + shareId);
+        var share = Shares.findOne({_id: shareId});
+        if (!share)
+            throw new Meteor.Error( 500, "Share doesn't exists");
+        var r = Shares.remove({_id: shareId});
+        return r;
     }
 });
 

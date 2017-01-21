@@ -1,7 +1,7 @@
 MAIN
 
 - [x] Allow draw name editing
-- [ ] Allow draw sharing
+- [x] Allow draw sharing
 - [ ] Add option for open any draw from history
 - [ ] Allow adding new empty draws
 - [ ] Allos adding new draws from templates
@@ -23,6 +23,6 @@ UI
 
 BACKEND
 - [ ] Register object undo/redo actions
-- [ ] Register draw sharing
+- [x] Register draw sharing
 - [ ] Query owned and shared draws
 - [ ] Save uploaded pictures

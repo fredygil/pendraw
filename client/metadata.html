@@ -1,35 +1,69 @@
 <template name="metadata">
-    <div class="col-md-12">
+    <div class="col-md-10 col-xs-9 draw-metadata">
         <span class="draw-title">{{> editableText context=currentDraw collection="draws" field="title"}}</span>
     </div>
+    <div class="col-md-2 col-xs-3 draw-metadata">
+        <span><i class="fa fa-user-circle" aria-hidden="true">&nbsp;{{currentUser}}</i></span>
+    </div>
+    {{#if isOwner}}
     <div class="col-md-12 draw-metadata">
         <span class="draw-share">
-            <a href="#" data-toggle="modal" data-target="#shareModal" class="js-share-draw">
+            <a href="#shareModal" class="js-share-draw" data-uk-modal>
                 <i class="fa fa-share-alt" aria-hidden="true">
                     Share
                 </i>
             </a>
         </span>
     </div>
+    {{/if}}
     {{> share_draw}}
 </template>
 
 <template name="share_draw">
     <!-- Modal -->
-    <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Share {{drawName}}</h4>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+    <div class="uk-modal" id="shareModal">
+        <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close"></a>
+            <div class="uk-modal-header">
+                <h4 class="modal-title" id="myModalLabel">Share {{drawName}}</h4>
+            </div>
+            <div class="uk-overflow-container">
+                <form class="form-inline js-save-share">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="test@test.com">
+                        <select class="form-control" name="permission">
+                            <option value="edit">Edit</option>
+                            <option value="view">View</option>
+                        </select>                            
+                    </div>
+                   <button type="submit" class="btn btn-primary">Share</button>
+                </form>
+                <table class="table table-striped">
+                    <tbody>
+                        {{#each shares}}
+                            <tr>
+                                <td>{{userEmail}}</td> 
+                                <td>
+                                    <input type="hidden" name="id" value="{{_id}}">
+                                    <select class="form-control" name="permission">
+                                        <option value="edit" {{selectedPermission permission "edit"}}>Edit</option>
+                                        <option value="view" {{selectedPermission permission "view"}}>View</option>
+                                    </select>                            
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary js-update-share">Save</button>
+                                    <button class="btn btn-primary js-remove-share">Remove</button>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                
+            </div>            
+            <div class="uk-modal-footer">
+                <button class="uk-modal-close">Close</button>
+            </div>
         </div>
-      </div>
-    </div>    
+    </div>
 </template>

@@ -31,7 +31,7 @@
     margin: 2px;
 }
 
-#canvas-metadata, input.wide-text-edit {
+.draw-metadata, input.wide-text-edit {
     background-color: #2196F3;
     color: #FFFFFF;
 }
@@ -46,6 +46,12 @@ input.wide-text-edit {
     font-size: 1.3em;
 }
 
+.draw-metadata a:hover {
+    font-size: 1.3em;
+    background-color: #2196F3;
+    color: #FFFFFF;
+    text-decoration: none;
+}
 
 .draw-metadata a:active, .draw-metadata a:hover, 
 .draw-metadata a:visited, .draw-metadata a:link {
@@ -53,7 +59,7 @@ input.wide-text-edit {
     color: #FFFFFF;
 }
 
-.draw-metadata a:hover {
-    font-size: 1.3em;
-}
 
+form.js-save-share {
+    padding: 10px;
+}

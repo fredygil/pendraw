@@ -1,5 +1,8 @@
 Meteor.subscribe("draws");
 Meteor.subscribe("actions");
+Meteor.subscribe("shares");
+Meteor.subscribe('allUsers')
+
 
 Router.configure({
   layoutTemplate: 'layout'

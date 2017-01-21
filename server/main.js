@@ -26,3 +26,12 @@ Meteor.publish("draws", function(){
 Meteor.publish("actions", function(){
     return Actions.find({});
 });
+
+//Shares for each draw
+Meteor.publish("shares", function(){
+    return Shares.find({});
+});
+
+ Meteor.publish('allUsers', function() {
+    return Meteor.users.find({});
+});
