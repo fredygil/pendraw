@@ -2,7 +2,7 @@ MAIN
 
 - [x] Allow draw name editing
 - [x] Allow draw sharing
-- [ ] Add option for open any draw from history
+- [x] Add option for open any draw from history
 - [x] Allow adding new empty draws
 - [x] Allow adding draws templates to current canvas
 - [ ] Allow rendering add and remove actions
@@ -25,5 +25,5 @@ UI
 BACKEND
 - [ ] Register object undo/redo actions
 - [x] Register draw sharing
-- [ ] Query owned and shared draws
+- [x] Query owned and shared draws
 - [ ] Save uploaded pictures

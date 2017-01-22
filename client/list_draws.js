@@ -6,7 +6,14 @@ Template.list_draws.helpers({
     },
     //Draws shared with current user
     shared_draws: function(){
-        
+        if (Meteor.user()){
+            //Get current user email
+            var email = Meteor.user().emails[0].address;
+            if (email){
+                return Shares.find({userEmail: email});
+            }
+        }
+        return;
     },
     draw_templates: function(){
         return Templates.find({});
@@ -18,6 +25,19 @@ Template.list_draws.helpers({
     //This avoids cache
     version: function(){
         return moment().unix();
+    },
+    drawTitle: function(drawId){
+        var draw = Draws.findOne({_id: drawId});
+        console.log(drawId);
+        if (draw)
+            return draw.title;
+        return '';
+    },
+    drawLastUpdate: function(drawId){
+        var draw = Draws.findOne({_id: drawId});
+        if (draw)
+            return moment(draw.lastUpdate).format("dddd, MMMM Do YYYY, h:mm:ss a");
+        return '';
     }    
 });
 

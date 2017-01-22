@@ -80,7 +80,7 @@ Meteor.methods({
         return Draws.findOne({_id: draw._id});
 
     },
-    saveSharing: function(draw, user, permission){
+    saveSharing: function(draw, user, owner, permission){
         if (!draw)
             throw new Meteor.Error( 500, "There is no current draw");
         if (!user)
@@ -102,6 +102,7 @@ Meteor.methods({
             drawId: draw._id,
             userId: user._id,
             userEmail: user.emails[0].address,
+            ownerEmail: owner.emails[0].address,
             permission: permission
         });
         return r;

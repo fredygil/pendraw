@@ -75,7 +75,7 @@ Template.share_draw.events({
             return false;
         }
 
-        Meteor.call("saveSharing", draw, user, e.target.permission.value, function(err, result){
+        Meteor.call("saveSharing", draw, user, Meteor.user(), e.target.permission.value, function(err, result){
             if (!err && result){
                 Session.set("displayMessage", {message: "Draw shared with " + e.target.email.value, status: "success"});
                 e.target.reset();
