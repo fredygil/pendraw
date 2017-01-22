@@ -31,9 +31,6 @@ Meteor.autorun(function() {
         if (latestDraw){
             //New objects or canvas cleared
             if (latestDraw.version > renderedVersion || (latestDraw.version == 0 && renderedVersion > 0)) {
-                // console.log("Call to drawChanges: ");
-                // console.log("currentDraw version: " + latestDraw.version);
-                // console.log("rendered version: " + Session.get("renderedVersion"));
                 drawChanges();
             }
         }
@@ -132,7 +129,6 @@ function drawChangedObjects(objects){
             }
         }
         else {
-            console.log('Object removing');
             mainCanvas.remove(mainCanvas.item(objects[i].data));
         }
     }
@@ -162,7 +158,6 @@ function newCanvasObject(options){
 }
 
 function removeCanvasObject(){
-    console.log("Remove object with index: " + objectIndex);
     Session.set("renderedVersion", Session.get("renderedVersion") + 1);
     Meteor.call("removeDrawObject", Session.get("currentDraw"), objectIndex, function(err, result){
         if (!err && result){
@@ -179,7 +174,28 @@ function removeCanvasObject(){
 //Object modifying
 function modifyCanvasObject(options){
     //Remove existent object and insert new one
-
+    Session.set("renderedVersion", Session.get("renderedVersion") + 1);
+    Meteor.call("removeDrawObject", Session.get("currentDraw"), objectIndex, function(err, result){
+        if (!err && result){
+            var jsonCanvas = mainCanvas.toJSON();
+            var lastObject = jsonCanvas.objects[objectIndex];
+            Session.set("renderedVersion", Session.get("renderedVersion") + 1);
+            Meteor.call("addDrawObject", result, lastObject, function(err, result){
+                if (!err && result){
+                    Session.set("currentDraw", result);
+                    //Export canvas to SVG
+                    var svg = mainCanvas.toSVG();
+                    Meteor.call("saveSVG", Session.get("currentDraw"), svg);
+                } else {
+                    Session.set("renderedVersion", Session.get("renderedVersion") - 1);
+                }
+            });
+            //Updates objectsCount
+            Session.set("objectsCount", Session.get("objectsCount") + 1);
+        } else {
+            Session.set("renderedVersion", Session.get("renderedVersion") - 1);
+        }
+    });
 }
 
 function selectedObject(e) {
