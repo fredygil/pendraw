@@ -1,0 +1,62 @@
+<template name="list_draws">
+    <!-- Modal -->
+    <div class="uk-modal" id="listDraws">
+        <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close"></a>
+            <div class="uk-modal-header">
+                <h3 class="modal-title uk-margin-top" id="myModalLabel">Open a Draw</h3>
+            </div>
+            <div class="uk-overflow-container">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#my-draws" aria-controls="my-draws" role="tab" data-toggle="tab">My Draws</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#shared-with-me" aria-controls="shared-with-me" role="tab" data-toggle="tab">Shared With Me</a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="my-draws">
+                        <div class="row">
+                            {{#each draws}}
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="thumbnail">
+                                        <a href="#" class="js-open-draw uk-modal-close" data-id="{{_id}}">
+                                            <img src="/thumbnails/{{_id}}.svg?v={{version}}" alt="(Empty)" class="js-open-draw uk-modal-close" data-id="{{_id}}">
+                                            <div class="caption js-open-draw uk-modal-close" data-id="{{_id}}">
+                                                <h3 class="js-open-draw uk-modal-close" data-id="{{_id}}">{{title}}</h3>
+                                            </div>
+                                        </a>
+                                        <small>
+                                            Last update: 
+                                            <strong>{{formatDate lastUpdate}}</strong><br>
+                                        </small>
+                                        <p><a href="#" class="btn btn-primary js-open-draw uk-modal-close" role="button" data-id="{{_id}}">Open</a></p>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="shared-with-me">
+                        <div class="row">
+                            {{#each draw_templates}}
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="thumbnail">
+                                        <a href="#" class="js-choose-template" data-file="{{file}}">
+                                            <img src="templates/{{file}}" alt="{{file}}" data-file="{{file}}">
+                                        </a>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            <div class="uk-modal-footer">
+                <button class="uk-modal-close">Close</button>
+            </div>
+        </div>
+    </div>    
+</template>

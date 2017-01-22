@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 // Method definitions
 Meteor.methods({
     // Creates a first new draw 
@@ -125,6 +127,17 @@ Meteor.methods({
             throw new Meteor.Error( 500, "Share doesn't exists");
         var r = Shares.remove({_id: shareId});
         return r;
+    },
+    saveSVG: function(draw, svg){
+        if (this.connection){
+            const thumbnailsPath = process.env['METEOR_SHELL_DIR'] + '/../../../.thumbnails/';
+            fs.writeFile(thumbnailsPath + draw._id + ".svg", svg, function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+            }); 
+        }
+        return;
     }
 });
 

@@ -1,7 +1,7 @@
 Template.toolbar.helpers({
     tools: function(){
         var tools = [
-                    // {name: "open", icon: "pictures.svg", title: "Open Draw"}
+                    {name: "open", icon: "pictures.svg", title: "Open Draw"},
                     {name: "new", icon: "add-image.svg", title: "New Draw"}, 
                     {name: "clear", icon: "image-3.svg", title: "Clear Draw"}, 
                     {name: "logout", icon: "logout.svg", title: "Sign Out"}
@@ -51,6 +51,10 @@ Template.toolbar.events({
                 Session.set("currentDraw", result);
             }
         });
+    },
+    'click .toolbar-open': function(e){
+        e.preventDefault();
+        UIkit.modal('#listDraws').show();
     },
 
 });

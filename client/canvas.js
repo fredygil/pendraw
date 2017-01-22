@@ -30,8 +30,12 @@ Meteor.autorun(function() {
         var latestDraw = Draws.findOne({_id: draw._id});
         if (latestDraw){
             //New objects or canvas cleared
-            if (latestDraw.version > renderedVersion || (latestDraw.version == 0 && renderedVersion > 0))
+            if (latestDraw.version > renderedVersion || (latestDraw.version == 0 && renderedVersion > 0)) {
+                // console.log("Call to drawChanges: ");
+                // console.log("currentDraw version: " + latestDraw.version);
+                // console.log("rendered version: " + Session.get("renderedVersion"));
                 drawChanges();
+            }
         }
     }
 });
@@ -65,18 +69,21 @@ function initFabricDrawing(){
 function drawChanges(){
     //Add objects from database to canvas and render it
     var currentDraw = Session.get("currentDraw");
+    var renderedVersion = Session.get("renderedVersion");
     if (currentDraw) {
         var lastDraw = Draws.findOne({_id: currentDraw._id});
-        if (mainCanvas && lastDraw && Session.get("renderedVersion") > 0 && lastDraw.version == 0){
+        if (mainCanvas && lastDraw && renderedVersion > 0 && lastDraw.version == 0){
             mainCanvas.clear();
             Session.set("renderedVersion", lastDraw.version);
             Session.set("currentDraw", lastDraw);
         }
-        if (lastDraw && lastDraw.version > Session.get("renderedVersion")){
+        if (lastDraw && lastDraw.version > renderedVersion){
             //Get last actions (not yet rendered) and render them
-            var actions = Actions.find({$and: [{drawId: draw._id}, {version: { $gt: Session.get("renderedVersion")}}]}, 
+            // console.log("Search params: drawId: " + currentDraw._id + " | version > " + renderedVersion);
+            var actions = Actions.find({drawId: currentDraw._id, version: { $gt: parseInt(renderedVersion)}}, 
                                        {sort: {version: 1}}).fetch();
 
+            // console.log("Versions to add: " + actions.length);
             if (mainCanvas && actions){
                 //Add each object to an array
                 var objects = new Array();
@@ -126,6 +133,9 @@ function newCanvasObject(options){
     Meteor.call("addDrawObject", Session.get("currentDraw"), lastObject, function(err, result){
         if (!err && result){
             Session.set("currentDraw", result);
+            //Export canvas to SVG
+            var svg = mainCanvas.toSVG();
+            Meteor.call("saveSVG", Session.get("currentDraw"), svg);
         }
     });
 

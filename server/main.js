@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 
 Meteor.startup(function() {
     
@@ -6,15 +8,15 @@ Meteor.startup(function() {
     Accounts.urls.resetPassword = function(token) {
         return Meteor.absoluteUrl('reset-password/' + token);
     };
-
-    //Create drawing templates
+    
     if (!Templates.findOne()){
-        var templates = [{extension: 'svg', files: 2}, {extension: 'png', files: 7}];
-        templates.forEach(function(template){
-            for (i=1; i<=template.files; i++){
-                Templates.insert({file: i + '.' + template.extension});
-            }
-        });
+        const meteorRoot = fs.realpathSync( process.cwd() + '/../' );
+        const publicPath = meteorRoot + '/web.browser/app/';
+
+        var files = fs.readdirSync(publicPath + '/templates');
+        for (i=0; i<files.length; i++){
+            Templates.insert({file: files[i]});
+        }
     }
 });
 
@@ -50,3 +52,48 @@ Meteor.publish('templates', function() {
     return Templates.find({});
 });
 
+
+//Uses iron router to server .thumbnails as /thumbnails
+Router.map(function () {
+  this.route('thumbnails', {
+    where: 'server',
+    path: '/thumbnails/:filename(.*)',
+    action: function() {
+      var basePath = process.env['METEOR_SHELL_DIR'] + '/../../../.thumbnails/';
+      var filename = path.normalize(path.join(basePath, this.params.filename));
+      var res = this.response;
+      // if (filename.substr(0, basePath.length) != basePath ||
+      //     !fs.existsSync(filename) ||
+      //     !fs.statSync(filename).isFile()) {
+      //   res.writeHead(404, {'Content-Type': 'text/html'});
+      //   res.end('404: no such asset: ' + this.params.filename);
+      //   return;
+      // }
+      var data = fs.readFileSync(filename);
+      var mimeType = mime.lookup(filename);
+      res.writeHead(200, { 'Content-Type': mimeType });
+      res.write(data);
+      res.end();
+    },
+  });
+});
+
+var mime = {
+  lookup: (function() {
+
+    var mimeTypes = {
+      ".svg": "image/svg+xml",  
+      ".html": "text/html",
+      ".js":   "application/javascript",
+      ".json": "application/json",
+      ".png":  "image/png",
+      ".gif":  "image/gif",
+      ".jpg":  "image/jpg",
+    };
+
+    return function(name) {
+      var type = mimeTypes[path.extname(name)];
+      return type || "text/html";
+    };
+  }()),
+};

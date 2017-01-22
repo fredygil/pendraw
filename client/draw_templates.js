@@ -1,6 +1,5 @@
 Template.draw_templates.helpers({
     draw_templates: function(){
-        //var fs = Meteor.npmRequire('fs');
         return Templates.find({});
     }
 });
@@ -26,9 +25,9 @@ Template.draw_templates.events({
                     rotating: setCoords
                 });
             });
-            //Change drawing mode to false. This allows new
-            //image manipulation
-            mainCanvas.isDrawingMode = false;
+            //Click on Move brush. This allows new
+            //image object manipulation
+            $('a.js-select-brush[data-brush="Move"]').click();
         });        
     }
 });
