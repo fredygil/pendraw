@@ -69,8 +69,6 @@ Router.map(function () {
             var basePath = process.env['METEOR_SHELL_DIR'] + '/../../../.thumbnails/';
             var filename = path.normalize(path.join(basePath, this.params.filename));
             var res = this.response;
-            console.log("filename: " + filename);
-            console.log(fs.existsSync(filename));
             if (!fs.existsSync(filename) ||
                 !fs.statSync(filename).isFile()) {
                     // res.writeHead(404, {'Content-Type': 'text/html'});

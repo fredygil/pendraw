@@ -63,6 +63,12 @@ function initFabricDrawing(){
 
     //Call this function each time a new object is added to canvas
     canvas.on('object:added', newCanvasObject);
+    //Call this function each time an object is removed
+    canvas.on('object:removed', removeCanvasObject);
+    //Call this function each time an object is modified
+    canvas.on('object:modified', modifyCanvasObject);
+    //Call this each time an object is selected
+    canvas.on('object:selected', selectedObject);
 }
 
 
@@ -88,17 +94,19 @@ function drawChanges(){
                 //Add each object to an array
                 var objects = new Array();
                 actions.forEach(function(action){
-                    objects.push(action.object);
+                    objects.push({action: action.action, data: action.object || action.objectIndex});
                 });
                 //Initially, asummes that all actions are of type 'add'
                 //Stops object:added event listener (to avoid recursion)
                 mainCanvas.off('object:added');
+                mainCanvas.off('object:removed');
                 //Draw new objects
-                drawNewObjects(objects);
+                drawChangedObjects(objects);
                 //Draw added objects on mainCanvas
                 mainCanvas.renderAll();
-                //Starts listening again for this event
+                //Starts listening again for this events
                 mainCanvas.on('object:added', newCanvasObject);
+                mainCanvas.on('object:removed', removeCanvasObject);
                 //Updates session variables
                 Session.set("renderedVersion", lastDraw.version);
                 Session.set("currentDraw", lastDraw);
@@ -111,15 +119,21 @@ function drawChanges(){
 //Add new objects to mainCanvas
 //Credits: http://stackoverflow.com/questions/27972454/canvas-fabric-js-loadfromjson-replaces-entire-canvas
 //Credits: http://jsfiddle.net/sFGGV/30/
-function drawNewObjects(objects){
+function drawChangedObjects(objects){
     for (var i = 0; i < objects.length; i++) {
-        var klass = fabric.util.getKlass(objects[i].type);
-        if (klass.async) {
-            klass.fromObject(objects[i], function (img) {
-                mainCanvas.add(img);
-            });
-        } else {
-            mainCanvas.add(klass.fromObject(objects[i]));
+        if (objects[i].action == 'add') {
+            var klass = fabric.util.getKlass(objects[i].data.type);
+            if (klass.async) {
+                klass.fromObject(objects[i].data, function (img) {
+                    mainCanvas.add(img);
+                });
+            } else {
+                mainCanvas.add(klass.fromObject(objects[i].data));
+            }
+        }
+        else {
+            console.log('Object removing');
+            mainCanvas.remove(mainCanvas.item(objects[i].data));
         }
     }
 }
@@ -130,18 +144,48 @@ function newCanvasObject(options){
     //Returns and updated draw object and set it in the session
     var jsonCanvas = mainCanvas.toJSON();
     var lastObject = jsonCanvas.objects[jsonCanvas.objects.length - 1];
+    Session.set("renderedVersion", Session.get("renderedVersion") + 1);
+
     Meteor.call("addDrawObject", Session.get("currentDraw"), lastObject, function(err, result){
         if (!err && result){
             Session.set("currentDraw", result);
             //Export canvas to SVG
             var svg = mainCanvas.toSVG();
             Meteor.call("saveSVG", Session.get("currentDraw"), svg);
+        } else {
+            Session.set("renderedVersion", Session.get("renderedVersion") - 1);
         }
     });
 
     //Updates objectsCount
     Session.set("objectsCount", Session.get("objectsCount") + 1);
 }
+
+function removeCanvasObject(){
+    console.log("Remove object with index: " + objectIndex);
+    Session.set("renderedVersion", Session.get("renderedVersion") + 1);
+    Meteor.call("removeDrawObject", Session.get("currentDraw"), objectIndex, function(err, result){
+        if (!err && result){
+            Session.set("currentDraw", result);
+            //Export canvas to SVG
+            var svg = mainCanvas.toSVG();
+            Meteor.call("saveSVG", Session.get("currentDraw"), svg);
+        } else {
+            Session.set("renderedVersion", Session.get("renderedVersion") - 1);
+        }
+    });
+}
+
+//Object modifying
+function modifyCanvasObject(options){
+    //Remove existent object and insert new one
+
+}
+
+function selectedObject(e) {
+    objectIndex = mainCanvas.getObjects().indexOf(e.target);
+}    
+
 
 //Resize canvas. Takes all width and all height minus 10px
 function resizeCanvas(){

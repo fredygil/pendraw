@@ -34,7 +34,7 @@ Template.toolbar.events({
                     Session.set("displayMessage", err);
                 } else {
                     mainCanvas.clear();
-                    Session.set("renderedVersion", "0");
+                    Session.set("renderedVersion", 0);
                     Session.set("currentDraw", result);
                 }
             });
@@ -47,7 +47,7 @@ Template.toolbar.events({
                 Session.set("displayMessage", err);
             } else {
                 Session.set("displayMessage", {message: "New draw created", status: "success"});
-                Session.set("renderedVersion", "0");
+                Session.set("renderedVersion", 0);
                 Session.set("currentDraw", result);
             }
         });

@@ -10,6 +10,7 @@ Template.paint_brushes.helpers({
                        {name: "pattern", icon: "dots-circular-shape.svg", brush: "Pattern"},
                        {name: "move", icon: "cube-with-arrows.svg", brush: "Move"},
                        {name: "birds", icon: "birds.svg", brush: "Template"},
+                       {name: "remove", icon: "cross-outline.svg", brush: "Remove"},
                       ];
         return brushes;
     },
@@ -29,6 +30,10 @@ Template.paint_brushes.events({
         }
         else if (brush == 'Template'){
             UIkit.modal('#drawTemplates').show();       
+        } 
+        else if (brush == 'Remove'){
+            if (mainCanvas.getActiveObject())
+                mainCanvas.getActiveObject().remove();
         } else {
             mainCanvas.isDrawingMode = true;
             mainCanvas.freeDrawingBrush = new fabric[brush + 'Brush'](mainCanvas);

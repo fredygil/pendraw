@@ -65,6 +65,36 @@ Meteor.methods({
 
         return Draws.findOne({_id: drawId});
     },
+    removeDrawObject: function(draw, objectIndex){
+        if (!this.userId){// not logged in
+            return;
+        }
+        //Get the last action
+        var lastAction = Actions.findOne({drawId: draw._id}, {sort: {version: -1}, limit: 1});
+        var lastVersion = 0;
+        if (lastAction){
+            lastVersion = lastAction.version;
+        }
+        //Insert the new action
+        var lastUpdate = new Date();
+        var action = {
+            drawId: draw._id,
+            userId: this.userId,
+            version: lastVersion + 1,
+            action: "remove",
+            objectIndex: objectIndex,
+            date: lastUpdate
+        };
+        Actions.insert(action);
+        //Updates draw metadata
+        Draws.update({_id: draw._id}, {$set: {
+                version: lastVersion + 1, 
+                size: draw.size - 1,
+                lastUpdate: lastUpdate
+            }
+        });
+        return Draws.findOne({_id: draw._id});        
+    },
     changeDrawPrivacy: function(draw){
         //Draw must be owned by current user
         if (!draw)
