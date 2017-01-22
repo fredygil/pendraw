@@ -4,6 +4,10 @@ Template.list_draws.helpers({
             return Draws.find({owner: Meteor.userId()});
         return;
     },
+    //Draws shared with current user
+    shared_draws: function(){
+        
+    },
     draw_templates: function(){
         return Templates.find({});
     },

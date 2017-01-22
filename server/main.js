@@ -9,6 +9,7 @@ Meteor.startup(function() {
         return Meteor.absoluteUrl('reset-password/' + token);
     };
     
+    //Feed templates collection with files in public/templates
     if (!Templates.findOne()){
         const meteorRoot = fs.realpathSync( process.cwd() + '/../' );
         const publicPath = meteorRoot + '/web.browser/app/';
@@ -18,6 +19,12 @@ Meteor.startup(function() {
             Templates.insert({file: files[i]});
         }
     }
+
+    //Creates folder for storing draws thumbnails
+    // var basePath = process.env['METEOR_SHELL_DIR'] + '/../../../.thumbnails/';
+    // if (!fs.existsSync(basePath)) {
+    //     fs.mkdirSync(basePath);
+    // } 
 });
 
 //Publish draws where current user is owner or are public or
@@ -55,25 +62,27 @@ Meteor.publish('templates', function() {
 
 //Uses iron router to server .thumbnails as /thumbnails
 Router.map(function () {
-  this.route('thumbnails', {
-    where: 'server',
-    path: '/thumbnails/:filename(.*)',
-    action: function() {
-      var basePath = process.env['METEOR_SHELL_DIR'] + '/../../../.thumbnails/';
-      var filename = path.normalize(path.join(basePath, this.params.filename));
-      var res = this.response;
-      // if (filename.substr(0, basePath.length) != basePath ||
-      //     !fs.existsSync(filename) ||
-      //     !fs.statSync(filename).isFile()) {
-      //   res.writeHead(404, {'Content-Type': 'text/html'});
-      //   res.end('404: no such asset: ' + this.params.filename);
-      //   return;
-      // }
-      var data = fs.readFileSync(filename);
-      var mimeType = mime.lookup(filename);
-      res.writeHead(200, { 'Content-Type': mimeType });
-      res.write(data);
-      res.end();
+    this.route('thumbnails', {
+        where: 'server',
+        path: '/thumbnails/:filename(.*)',
+        action: function() {
+            var basePath = process.env['METEOR_SHELL_DIR'] + '/../../../.thumbnails/';
+            var filename = path.normalize(path.join(basePath, this.params.filename));
+            var res = this.response;
+            console.log("filename: " + filename);
+            console.log(fs.existsSync(filename));
+            if (!fs.existsSync(filename) ||
+                !fs.statSync(filename).isFile()) {
+                    // res.writeHead(404, {'Content-Type': 'text/html'});
+                    // res.end('404: no such asset: ' + this.params.filename);
+                    // return;
+                    filename = path.normalize(path.join(basePath, 'blank.svg'));
+            }
+            var data = fs.readFileSync(filename);
+            var mimeType = mime.lookup(filename);
+            res.writeHead(200, { 'Content-Type': mimeType });
+            res.write(data);
+            res.end();
     },
   });
 });

@@ -1,6 +1,7 @@
 <template name="list_draws">
+
     <!-- Modal -->
-    <div class="uk-modal" id="listDraws">
+    <div class="uk-modal" id="listDraws" uk-modal="center: true">
         <div class="uk-modal-dialog">
             <a class="uk-modal-close uk-close"></a>
             <div class="uk-modal-header">
@@ -21,7 +22,7 @@
                     <div role="tabpanel" class="tab-pane active" id="my-draws">
                         <div class="row">
                             {{#each draws}}
-                                <div class="col-sm-6 col-md-6">
+                                <div class="col-sm-6 col-md-6 col-lg-4">
                                     <div class="thumbnail">
                                         <a href="#" class="js-open-draw uk-modal-close" data-id="{{_id}}">
                                             <img src="/thumbnails/{{_id}}.svg?v={{version}}" alt="(Empty)" class="js-open-draw uk-modal-close" data-id="{{_id}}">
@@ -30,8 +31,7 @@
                                             </div>
                                         </a>
                                         <small>
-                                            Last update: 
-                                            <strong>{{formatDate lastUpdate}}</strong><br>
+                                            Last update: <strong>{{formatDate lastUpdate}}</strong><br>
                                         </small>
                                         <p><a href="#" class="btn btn-primary js-open-draw uk-modal-close" role="button" data-id="{{_id}}">Open</a></p>
                                     </div>
@@ -41,12 +41,20 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="shared-with-me">
                         <div class="row">
-                            {{#each draw_templates}}
-                                <div class="col-sm-6 col-md-6">
+                            {{#each shared_draws}}
+                                <div class="col-sm-6 col-md-6 col-lg-4">
                                     <div class="thumbnail">
-                                        <a href="#" class="js-choose-template" data-file="{{file}}">
-                                            <img src="templates/{{file}}" alt="{{file}}" data-file="{{file}}">
+                                        <a href="#" class="js-open-draw uk-modal-close" data-id="{{_id}}">
+                                            <img src="/thumbnails/{{_id}}.svg?v={{version}}" alt="(Empty)" class="js-open-draw uk-modal-close" data-id="{{_id}}">
+                                            <div class="caption js-open-draw uk-modal-close" data-id="{{_id}}">
+                                                <h3 class="js-open-draw uk-modal-close" data-id="{{_id}}">{{title}}</h3>
+                                            </div>
                                         </a>
+                                        <small>
+                                            Owner: <strong>{{owner}}</strong><br>
+                                            Last update: <strong>{{formatDate lastUpdate}}</strong><br>
+                                        </small>
+                                        <p><a href="#" class="btn btn-primary js-open-draw uk-modal-close" role="button" data-id="{{_id}}">Open</a></p>
                                     </div>
                                 </div>
                             {{/each}}
@@ -55,7 +63,7 @@
                 </div>
             </div>            
             <div class="uk-modal-footer">
-                <button class="uk-modal-close">Close</button>
+                <button class="uk-modal-close" type="button" uk-close></button>
             </div>
         </div>
     </div>    
