@@ -1,5 +1,6 @@
 Template.draw_templates.helpers({
     draw_templates: function(){
+        //var fs = Meteor.npmRequire('fs');
         return Templates.find({});
     }
 });
