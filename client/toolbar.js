@@ -6,6 +6,8 @@ Template.toolbar.helpers({
                     {name: "clear", icon: "image-3.svg", title: "Clear Draw"}, 
                     {name: "logout", icon: "logout.svg", title: "Sign Out"}
                     ];
+        if (!Session.get("isEditable"))
+            delete tools[2];
         return tools;
     }
 });
@@ -49,6 +51,7 @@ Template.toolbar.events({
                 Session.set("displayMessage", {message: "New draw created", status: "success"});
                 Session.set("renderedVersion", 0);
                 Session.set("currentDraw", result);
+                Session.set("isEditable", true);
             }
         });
     },

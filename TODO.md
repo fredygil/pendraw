@@ -5,7 +5,7 @@ MAIN
 - [x] Add option for open any draw from history
 - [x] Allow adding new empty draws
 - [x] Allow adding draws templates to current canvas
-- [ ] Allow rendering add and remove actions
+- [x] Allow rendering add and remove actions
 - [ ] Allow user to upload pictures from device
 - [ ] Allow user to copy a draw
 - [ ] Allow user to use a picture as a template for drawing on top

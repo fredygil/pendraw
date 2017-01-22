@@ -1,6 +1,7 @@
 <template name="draw">
     <div id="main-container">
         <div class="left">
+            {{#if editable}}
             <div id="palette-container" class="row">
                 <div class="col-md-12"> 
                     {{> palette}}
@@ -12,6 +13,7 @@
             <div id="paint-brushes-container" class="row shadow-container container-left">
                 {{> paint_brushes}}
             </div>
+            {{/if}}
             <div id="toolbar-container" class="row shadow-container container-left">
                 {{> toolbar}}
             </div>

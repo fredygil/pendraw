@@ -51,7 +51,18 @@ Template.list_draws.events({
         if (draw){
             mainCanvas.clear();
             Session.set({"currentDraw": draw, "renderedVersion": 0});
+            if (draw.owner == Meteor.userId())
+                Session.set("isEditable", true);
+            else {
+                //Check sharing permissions
+                var share = Shares.findOne({drawId: draw._id, userId: Meteor.userId()});
+                if (share){
+                    Session.set("isEditable", share.permission == 'edit');
+                }
+            }
+            return;
         }
+        Session.set("isEditable", false);
         return;
     }
 });
