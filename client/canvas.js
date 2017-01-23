@@ -109,6 +109,8 @@ function drawChanges(){
                 Session.set("currentDraw", lastDraw);
             }
         }
+        //Update toolbar save button
+        updateSaveButton();
     }
 
 }
@@ -155,6 +157,9 @@ function newCanvasObject(options){
 
     //Updates objectsCount
     Session.set("objectsCount", Session.get("objectsCount") + 1);
+
+    //Update toolbar save button
+    updateSaveButton();
 }
 
 function removeCanvasObject(){
@@ -169,6 +174,9 @@ function removeCanvasObject(){
             Session.set("renderedVersion", Session.get("renderedVersion") - 1);
         }
     });
+
+    //Update toolbar save button
+    updateSaveButton();
 }
 
 //Object modifying
@@ -196,6 +204,8 @@ function modifyCanvasObject(options){
             Session.set("renderedVersion", Session.get("renderedVersion") - 1);
         }
     });
+    //Update toolbar save button
+    updateSaveButton();
 }
 
 function selectedObject(e) {
@@ -212,4 +222,13 @@ function resizeCanvas(){
         mainCanvas.setWidth(width);
         mainCanvas.setHeight(height);
     }
+}
+
+
+function updateSaveButton(){
+    if (mainCanvas && Session.get("currentDraw")){
+        $('.toolbar-save').attr('href', mainCanvas.toDataURL());
+        $('.toolbar-save').attr('download', Session.get("currentDraw").title + '.png');
+    }
+
 }
