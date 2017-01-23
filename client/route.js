@@ -65,5 +65,7 @@ function setupCurrentDraw(){
                 }
             });
         }
+        //User can edit this draw
+        Session.set("isEditable", true);
     }
 }
